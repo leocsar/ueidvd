@@ -1,0 +1,25 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	background-color: #0e273c;
+	margin: 0px;
+}
+
+#container {
+	position: relative;
+	background-color: #0e273c;
+	margin: 0px;
+	width: 100%;
+	overflow: hidden;
+}
+
+#box {
+	position: absolute;
+	height: 13.5rem;
+	width: 9rem;
+	background-color: whitesmoke;
+}
