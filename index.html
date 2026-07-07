@@ -4,16 +4,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ueidvd</title>
+  <meta name="description"
+    content="O lendário protetor de tela do DVD, mas com uma careca sorridente quicando pela tela. Bate no canto e ganha confete.">
+  <title>Ueidvd — o DVD que perdeu o cabelo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <div id="container">
-    <div id="box">
-      <img src="./ueidim.jpeg" style="width: 9rem; height: 13.5rem;" alt="" srcset="">
+    <!-- Placar discreto no topo -->
+    <div id="scoreboard" aria-live="polite">
+      <span class="score-item">quiques: <b id="bounceCount">0</b></span>
+      <span class="score-item">cantos: <b id="cornerCount">0</b></span>
+      <span class="score-item">recorde: <b id="cornerRecord">0</b></span>
+    </div>
+
+    <!-- Botão de som (começa mutado) -->
+    <button id="soundToggle" type="button" aria-label="Ligar ou desligar o som" title="Som (boing)">🔇</button>
+
+    <!-- Mensagem gigante da comemoração de canto -->
+    <div id="cornerBanner" aria-hidden="true"></div>
+
+    <!-- A cabeça original vive aqui; as clonadas são criadas via JS -->
+    <div class="box" id="box">
+      <img src="./ueidim.jpeg" alt="Cabeça careca sorridente com um adesivo escrito CABELO na testa">
+      <span class="taunt"></span>
     </div>
   </div>
+
+  <p id="hint">clique pra multiplicar as cabeças 🫡</p>
+
   <script src="index.js"></script>
 </body>
 
