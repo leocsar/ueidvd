@@ -7,6 +7,8 @@ body {
 	display: flex;
 	background-color: #0e273c;
 	margin: 0px;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	overflow: hidden;
 }
 
 #container {
@@ -14,12 +16,183 @@ body {
 	background-color: #0e273c;
 	margin: 0px;
 	width: 100%;
+	height: 100%;
 	overflow: hidden;
 }
 
-#box {
+/* ---- A cabeça quicante ---- */
+.box {
 	position: absolute;
-	height: 13.5rem;
+	top: 0;
+	left: 0;
 	width: 9rem;
-	background-color: whitesmoke;
+	height: 13.5rem;
+	/* O brilho colorido do DVD original: muda de matiz a cada batida. */
+	--hue: 200;
+	filter: drop-shadow(0 0 14px hsl(var(--hue) 90% 60%));
+	transition: filter 0.15s ease-out;
+	will-change: transform;
+	cursor: grab;
+}
+
+.box img {
+	width: 100%;
+	height: 100%;
+	display: block;
+	border-radius: 6px;
+	pointer-events: none;
+	user-select: none;
+}
+
+/* ---- Balãozinho de zoeira ---- */
+.taunt {
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translate(-50%, -8px);
+	margin-bottom: 2px;
+	padding: 4px 10px;
+	background: #fff;
+	color: #0e273c;
+	font-size: 0.8rem;
+	font-weight: 700;
+	white-space: nowrap;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	pointer-events: none;
+}
+
+.taunt.show {
+	opacity: 1;
+}
+
+.taunt::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	border: 6px solid transparent;
+	border-top-color: #fff;
+}
+
+/* ---- Placar ---- */
+#scoreboard {
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 14px;
+	padding: 6px 14px;
+	background: rgba(0, 0, 0, 0.35);
+	border-radius: 999px;
+	color: #cfe3f5;
+	font-size: 0.85rem;
+	z-index: 5;
+	user-select: none;
+	backdrop-filter: blur(2px);
+}
+
+#scoreboard b {
+	color: #fff;
+}
+
+/* ---- Botão de som ---- */
+#soundToggle {
+	position: absolute;
+	top: 10px;
+	right: 12px;
+	z-index: 5;
+	width: 40px;
+	height: 40px;
+	border: none;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.35);
+	color: #fff;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: transform 0.1s ease, background 0.2s ease;
+}
+
+#soundToggle:hover {
+	background: rgba(0, 0, 0, 0.55);
+	transform: scale(1.08);
+}
+
+#soundToggle:active {
+	transform: scale(0.92);
+}
+
+/* ---- Dica no rodapé ---- */
+#hint {
+	position: absolute;
+	bottom: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 0;
+	color: rgba(207, 227, 245, 0.55);
+	font-size: 0.8rem;
+	z-index: 5;
+	user-select: none;
+	pointer-events: none;
+	animation: hintFade 6s ease-in forwards;
+}
+
+@keyframes hintFade {
+	0%, 70% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+/* ---- Banner da comemoração de canto ---- */
+#cornerBanner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.4);
+	z-index: 20;
+	font-size: clamp(1.6rem, 6vw, 3.4rem);
+	font-weight: 900;
+	color: #fff;
+	text-align: center;
+	text-shadow: 0 0 18px hsl(var(--banner-hue, 48) 100% 60%);
+	opacity: 0;
+	pointer-events: none;
+	white-space: nowrap;
+}
+
+#cornerBanner.pop {
+	animation: bannerPop 1.6s ease-out forwards;
+}
+
+@keyframes bannerPop {
+	0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(-8deg); }
+	15% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(4deg); }
+	30% { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
+	80% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+	100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ---- Confete ---- */
+.confetti {
+	position: absolute;
+	top: 0;
+	width: 10px;
+	height: 14px;
+	z-index: 15;
+	pointer-events: none;
+	will-change: transform, opacity;
+	animation: confettiFall var(--dur, 1.8s) linear forwards;
+}
+
+@keyframes confettiFall {
+	0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+	100% { transform: translateY(105vh) rotate(720deg); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.box { transition: none; }
+	.confetti { animation-duration: 0.9s; }
 }
